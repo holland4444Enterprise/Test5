@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "bucket101" {
+resource "aws_s3_bucket" "bucket201" {
   bucket = "my-tf-test-bucket"
   acl    = "public-read"
   tags = {

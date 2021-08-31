@@ -72,24 +72,20 @@ jobs:
       # Runs a set of commands using the runners shell
 
       - name: Run Infra as Code Checker
-
         run: |
-
           set -ax
-
           env
-
-          PULL_REQUEST_BASE_BRANCH=${GITHUB_BASE_REF/refs\/heads\//}
-
+          SOURCE_BRANCH=${GITHUB_REF/refs\/heads\//}
           BLUBRACKET_SERVICE_ENDPOINT=https://chuck.blubracket.com
 
           BLUBRACKET_INTEGRATION_KEY=${{ secrets.BB_API_IAC_KEY }}
-
+          
           docker run \
             -u $(id -u):$(id -g) \
             -v ${GITHUB_WORKSPACE}:/home/blubracket/iac-checker/repo \
             blubracket/iac-checker:0.0.3-beta run \
             --blubracket-service-endpoint ${BLUBRACKET_SERVICE_ENDPOINT} \
             --integration-key ${BLUBRACKET_INTEGRATION_KEY} \
-            --base-branch ${PULL_REQUEST_BASE_BRANCH:-""} \
+            --source-branch ${GITHUB_HEAD_REF:-${SOURCE_BRANCH}} \
+            --target-branch ${GITHUB_BASE_REF:-""} \
             --do-not-fail-on-misconfigurations

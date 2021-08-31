@@ -85,8 +85,10 @@ jobs:
 
           BLUBRACKET_INTEGRATION_KEY=${{ secrets.BB_API_IAC_KEY }}
 
-          docker run -v ${GITHUB_WORKSPACE}:/usr/blu/iac-checker/repo \
-            blubracket/iac-checker:0.0.7-alpha run \
+          docker run \
+            -u $(id -u):$(id -g)
+            -v ${GITHUB_WORKSPACE}:/home/blubracket/iac-checker/repo \
+            blubracket/iac-checker:0.0.3-beta run \
             --blubracket-service-endpoint ${BLUBRACKET_SERVICE_ENDPOINT} \
             --integration-key ${BLUBRACKET_INTEGRATION_KEY} \
             --base-branch ${PULL_REQUEST_BASE_BRANCH:-""} \

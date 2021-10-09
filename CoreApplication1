@@ -19,5 +19,6 @@ x = 5;
 document.getElementById("demo").innerHTML = x * 10;
 </script>
 
+password = "P@ssw0rd,234o2y4324@$@$#"
 </body>
 </html>
